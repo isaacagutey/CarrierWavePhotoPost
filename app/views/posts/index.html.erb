@@ -1,0 +1,44 @@
+<div id="container">
+<h1>Listing posts</h1>
+
+<table class="gradienttable"  cellspacing="2" cellpadding="2" align="middle">
+  <%= link_to 'New Post', new_post_path %>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <!-- Display of the image file !-->
+        <td><%= image_tag post.avatar_url(:thumb) %><br>
+          <%= post.title %>
+          <hr>
+          <div id="close">
+          <div class="close" id="float"><summary>Body</summary><p><%= post.body %></p><hr></div>
+          <div id="comment" class="close"><summary>Comments</summary><p id="close3"><%= post.body %></p></div>
+          </div>
+          <hr>
+          <%= link_to 'Show', post %> |
+          <%= link_to 'Edit', edit_post_path(post) %> |
+          <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+    <% end %>
+  </tbody>
+</table>
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+
+<script>
+$('div summary').each(function(){
+$(this).nextAll().wrapAll('<div id="wrap"></div>');
+});
+$('div').attr('open','').find('#wrap').css('display','none');
+$('div.open div#wrap').css('display','block');
+$('div summary').click(function(e) {
+e.preventDefault();
+$(this).siblings('div#wrap').slideToggle(function(){
+$(this).parent('div').toggleClass('close');
+});
+});
+</script>
+
+
+</div>
+
